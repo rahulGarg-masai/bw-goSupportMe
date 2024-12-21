@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plagiarism Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plagiarism Detection System</h1>
+        <label for="file-upload">Upload Assignment Files:</label>
+        <input type="file" id="file-upload" multiple accept=".txt">
+        <button onclick="processFiles()">Check Similarities</button>
+
+        <h2>Similarity Report</h2>
+        <table id="similarity-report">
+            <thead>
+                <tr>
+                    <th>Assignment Pair</th>
+                    <th>Similarity (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+        <button id="download-flagged" style="display:none;" onclick="downloadFlaggedPairs()">Download Flagged Pairs</button>
+    </div>
+
+    <script>
+        let assignments = [];
+        let flaggedPairs = [];
+
+        function normalizeText(text) {
+            return text
+                .toLowerCase()
+                .replace(/[^a-zA-Z0-9\s]/g, '')
+                .replace(/\b(?:a|an|the|and|or|but|if|in|on|at|to|with|by|for|of)\b/g, '')
+                .split(/\s+/)
+                .filter(word => word);
+        }
+
+        function calculateSimilarity(words1, words2) {
+            const set1 = new Set(words1);
+            const set2 = new Set(words2);
+            const intersection = new Set([...set1].filter(word => set2.has(word)));
+            return ((intersection.size / Math.max(set1.size, set2.size)) * 100).toFixed(2);
+        }
+
+        function processFiles() {
+            const files = document.getElementById('file-upload').files;
+            const reportTable = document.getElementById('similarity-report').querySelector('tbody');
+            reportTable.innerHTML = '';
+            assignments = [];
+            flaggedPairs = [];
+
+            if (files.length < 2) {
+                alert('Please upload at least two assignments.');
+                return;
+            }
+
+            const filePromises = Array.from(files).map(file => {
+                return file.text().then(content => {
+                    assignments.push({ id: file.name, words: normalizeText(content) });
+                });
+            });
+
+            Promise.all(filePromises).then(() => {
+                for (let i = 0; i < assignments.length; i++) {
+                    for (let j = i + 1; j < assignments.length; j++) {
+                        const similarity = calculateSimilarity(assignments[i].words, assignments[j].words);
+                        const row = document.createElement('tr');
+
+                        row.innerHTML = `
+                            <td>${assignments[i].id} &amp; ${assignments[j].id}</td>
+                            <td>${similarity}%</td>
+                        `;
+
+                        if (similarity > 80) {
+                            row.style.backgroundColor = '#ffcccc';
+                            flaggedPairs.push({
+                                pair: `${assignments[i].id} & ${assignments[j].id}`,
+                                similarity: `${similarity}%`
+                            });
+                        }
+
+                        reportTable.appendChild(row);
+                    }
+                }
+
+                if (flaggedPairs.length > 0) {
+                    document.getElementById('download-flagged').style.display = 'block';
+                }
+            });
+        }
+
+        function downloadFlaggedPairs() {
+            const blob = new Blob([
+                JSON.stringify(flaggedPairs, null, 2)
+            ], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.download = 'flagged_pairs.json';
+            link.click();
+
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
