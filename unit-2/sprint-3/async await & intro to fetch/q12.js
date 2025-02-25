@@ -1,0 +1,16 @@
+function CreateCar(make,model,year){
+    let obj ={};
+        obj.make = make,
+        obj.model = model,
+        obj.year = year,
+        obj.describeCar = function(){
+            console.log(`This car is a ${this.year} ${this.make} ${this.model}`);
+        }
+    
+    return obj;
+    
+}
+
+const car = CreateCar("Toyota", "Camry", 2022);
+car.describeCar();
+// Output: This car is a 2022 Toyota Camry.
