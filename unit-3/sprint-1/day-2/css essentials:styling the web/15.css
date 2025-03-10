@@ -1,0 +1,29 @@
+#head{
+    color: darkblue;
+    text-align: center;
+}
+#header{
+    background-color: orangered;
+}
+#h2{
+    text-align: center;
+    color: aliceblue;
+}
+#me-img{
+    width: 20%;
+}
+#proj1-img{
+    width: 10%;
+  
+}
+#project1{
+    border: 1px solid lightgray;
+    padding-left: 10px;
+}
+#info{
+    text-align: center;
+}
+footer{
+    text-align: center;
+    background-color: orangered;
+}
