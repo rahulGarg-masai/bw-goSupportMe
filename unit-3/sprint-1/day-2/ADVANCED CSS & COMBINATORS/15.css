@@ -1,0 +1,27 @@
+.sec1 a{
+    color: aqua;
+}
+.sec2 a{
+    color: blueviolet;
+}
+.sec3 a{
+    color: chocolate;
+}
+.l11:hover{
+color: orange;
+}
+.l11:active{
+    color: red;
+}
+.l12:hover{
+    color: aqua;
+}
+.l12:active{
+    color: blue;
+}
+.l13:hover{
+    color: lightgreen;
+}
+.l13:active{
+    color: red;
+}
