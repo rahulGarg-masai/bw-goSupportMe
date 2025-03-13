@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 class="logo">finance</h2>
+            <nav>
+                <ul>
+                    <li class="active"><i class="fas fa-home"></i> Overview</li>
+                    <li><i class="fas fa-exchange-alt"></i> Transactions</li>
+                    <li><i class="fas fa-chart-pie"></i> Budgets</li>
+                    <li><i class="fas fa-wallet"></i> Pots</li>
+                    <li><i class="fas fa-file-invoice-dollar"></i> Recurring Bills</li>
+                </ul>
+            </nav>
+            <button class="minimize-menu"><i class="fas fa-angle-left"></i> Minimize Menu</button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header>
+                <h2>Overview</h2>
+            </header>
+
+            <section class="overview">
+                <div class="box balance">
+                    <p>Current Balance</p>
+                    <h3>$4,836.00</h3>
+                </div>
+                <div class="box income">
+                    <p>Income</p>
+                    <h3>$3,814.25</h3>
+                </div>
+                <div class="box expenses">
+                    <p>Expenses</p>
+                    <h3>$1,700.50</h3>
+                </div>
+            </section>
+
+            <section class="details">
+                <div class="pots">
+                    <h3>Pots</h3>
+                    <p>Total Saved: <strong>$850</strong></p>
+                    <ul>
+                        <li>Savings: $159</li>
+                        <li>Gift: $40</li>
+                        <li>Concert Ticket: $110</li>
+                        <li>New Laptop: $10</li>
+                    </ul>
+                </div>
+
+                <div class="budgets">
+                    <h3>Budgets</h3>
+                    <div class="chart">
+                        <p>$338 of $975 limit</p>
+                    </div>
+                </div>
+
+                <div class="transactions">
+                    <h3>Transactions</h3>
+                    <ul>
+                        <li>Emma Richardson <span>+$75.50</span></li>
+                        <li>Savory Bites Bistro <span>-$55.50</span></li>
+                        <li>Daniel Carter <span>-$42.30</span></li>
+                        <li>Sun Park <span>+$120.00</span></li>
+                        <li>Urban Services Hub <span>-$65.00</span></li>
+                    </ul>
+                </div>
+
+                <div class="recurring-bills">
+                    <h3>Recurring Bills</h3>
+                    <ul>
+                        <li>Paid Bills: $190.00</li>
+                        <li>Total Upcoming: $194.98</li>
+                        <li>Due Soon: $59.98</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
