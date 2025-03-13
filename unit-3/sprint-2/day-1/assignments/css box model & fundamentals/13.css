@@ -1,0 +1,14 @@
+.head{
+    position: sticky;
+    top: 0;
+    background-color: green;
+    border: 1px solid red;
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border: 1px solid blue;
+    width: 30%;
+    text-align: center;
+}
