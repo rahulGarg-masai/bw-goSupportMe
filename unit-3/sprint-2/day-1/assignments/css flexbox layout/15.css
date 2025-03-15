@@ -1,0 +1,59 @@
+.container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    
+   padding: 20px;
+    box-sizing: border-box;
+    gap: 20px;
+}
+.right{
+    flex: 1;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.left{
+    flex: 1;
+    gap: 20px;
+    display: flex;
+   flex-direction: column;
+
+}
+
+.group1, .group3{
+    
+    border: 1px solid #555; /* Gray border around each group */
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-around;
+  align-content: space-around;
+  
+}
+
+.group2{
+  flex: 1;
+ 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-around;
+  
+}
+.circle {
+   
+    width: 100px;
+    height: 100px;
+    border: 1px solid #555; /* Gray border */
+    border-radius: 50%; /* Makes it circular */
+  }
+  .rectangle {
+    flex: 1;
+    border: 1px solid #555; /* Gray border */
+    border-radius: 10px;
+  }

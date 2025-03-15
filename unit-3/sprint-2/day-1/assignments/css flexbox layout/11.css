@@ -1,0 +1,11 @@
+.container{
+    display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 2px;
+}
+.container div{
+    border: 2px solid burlywood;
+    padding: 2px;
+    box-sizing: content-box;
+}
