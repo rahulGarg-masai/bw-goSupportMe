@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div" style="width: 100px; height: 100px; background-color: aqua; overflow: scroll;">
+        
+    </div>
+    <button id="add">add paragraph</button>
+    <button id="del" style="display: none;">remove last para</button>
+
+</body>
+</html>
+<script>
+    let div = document.getElementById("div");
+let add = document.getElementById("add");
+
+
+let btn = document.getElementById("del");
+add.addEventListener("click",()=>{
+    let para = document.createElement("p");
+    para.innerText = "This is a new paragraph";
+    div.appendChild(para);
+    
+        btn.style.display = 'inline';
+       
+
+})
+btn.addEventListener("click",()=>{
+    if(div.lastChild){
+            div.removeChild(div.lastChild);
+    }
+            if(div.lastChild.length===0){
+        btn.style.display = 'none';
+    }
+        })
+
+</script>

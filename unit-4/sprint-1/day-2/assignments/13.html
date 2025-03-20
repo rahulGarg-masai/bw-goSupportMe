@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- nested divs with buttons at each level , just like the hierarchy structure during js event , (root - element - target) -->
+    <div id="grandparent">
+        <button>1</button>
+        <div id="parent">
+            <button>2</button>
+            <div id="child">
+                <button>3</button>
+            </div>
+        </div>
+      </div>
+      
+      <script>
+        const grandparent = document.getElementById('grandparent');
+        const parent = document.getElementById('parent');
+        const child = document.getElementById('child');
+//simple event bubling , js event starts from root(grandparent) reaches target (which triggered it) then bubles back up(from target to root) 
+//executing event listner functions down to up , (thats y we see 2 clicked then 1 clicked - no 3 clicked , when we click button 2 ).
+//BUBLING-
+      grandparent.addEventListener('click',()=>{
+        alert('1 clicked');
+      })
+        parent.addEventListener('click', () => {
+          alert('2 clicked');
+        });
+      
+        // child.addEventListener('click', () => {
+        //   alert('3 clicked');
+        // });
+        
+          //STOPPING PROPAGATION , only listenes to alert inside child(where stop propagation is) , doesnt buble events back up
+          child.addEventListener('click',(event)=>{
+            event.stopPropagation();
+            alert('3 clicked and bubling stopped');
+          })
+        
+
+//EVENT CAPTURING - (event listened from up (root) to down(target))
+// grandparent.addEventListener('click',()=>{
+//     alert('1 clicked(capture phase)')
+// },true)
+// parent.addEventListener('click',()=>{
+//     alert('2 clicked(capture phase)')
+// },true)
+// child.addEventListener('click',()=>{
+//     alert('3 clicked')
+// })
+      </script>
+      
+      
+      
+</body>
+</html>
