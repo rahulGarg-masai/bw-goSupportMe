@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+p{
+    color: red;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        hello i am the div
+    </div>
+<h1 id="h1">before DOM</h1>
+<p>p1</p>
+<p>p2</p>
+<p>p3</p>
+</body>
+</html>
+<script>
+let change1 = document.getElementById('h1');
+change1.innerText = 'welcome to dom world!';
+let para = document.getElementsByTagName("p");
+for(let i=0;i<para.length;i++){
+    para[i].style.color= "blue";
+}
+document.querySelector("div.container").style.color = 'yellow';
+</script>

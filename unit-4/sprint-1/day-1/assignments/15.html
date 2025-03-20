@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="text" placeholder="text">
+    <button id="add">add task</button>
+    <button id="del" style="display: none;" >delete</button>
+    <button id="com" style="display: none;">complete</button>
+    <ul id="list">
+<li>1</li>
+    </ul>
+    
+</body>
+</html>
+<script>
+    const btn = document.getElementById("add");
+    const task = document.getElementById("text").value.trim();
+    const list = document.getElementById("list");
+    let item = document.createElement("li");
+    btn.addEventListener("click",()=>{
+        if(task.length==0){
+            alert("input text!");
+        }
+        else{
+item.textContent = task;
+list.appendChild(item);
+let delbtn = document.getElementById('del');
+let completebtn = document.getElementById('com');
+delbtn.style.display = 'inline';
+completebtn.style.display = 'inline';
+delbtn.addEventListener("click",()=>{
+    item.remove();
+})
+completebtn.addEventListener("click",()=>{
+item.style.textDecoration = 'line-through';
+})
+        }
+    })
+
+</script>

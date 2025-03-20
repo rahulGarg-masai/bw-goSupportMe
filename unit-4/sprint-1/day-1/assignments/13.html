@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="colorname" placeholder="color name"><br>
+    <input type="text" id="text" placeholder="text"><br>
+    <button id="changebg">change background</button><br>
+    <button id="updatext">update text</button><br>
+    <div id="div" style="background-color: aqua;">initial text</div>
+</body>
+</html>
+<script>
+    function checkValidCss(color){
+        return CSS.supports("color",color);
+    }
+const div = document.getElementById('div');
+
+    const btn1 = document.getElementById("changebg");
+    btn1.addEventListener("click",()=>{
+         let colorname = document.getElementById('colorname').value.trim();
+         if(!checkValidCss(colorname)){
+            alert("Invalid Color Name!");
+         }
+         else{
+div.style.backgroundColor = colorname;
+         }
+    })
+
+    const btn2 = document.getElementById("updatext");
+    let text = document.getElementById("text").value.trim();
+    btn2.addEventListener("click",()=>{
+        if(text.length==0){
+            alert("Please enter some text!");
+        }
+        else {
+            div.textContent = text;
+        }
+    })
+
+</script>
