@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Listing</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+        .product { border: 1px solid #ddd; padding: 15px; text-align: center; border-radius: 5px; }
+        .product img { width: 100px; height: 100px; object-fit: cover; }
+        .error { color: red; font-weight: bold; }
+        button { padding: 5px 10px; background: blue; color: white; border: none; cursor: pointer; }
+        button:hover { background: darkblue; }
+    </style>
+</head>
+<body>
+    <h2>Product Listing</h2>
+    <div id="error" class="error"></div>
+    <div class="container" id="productList"></div>
+    
+    <script>
+        async function fetchProducts() {
+            let errorDiv = document.getElementById('error');
+            let productList = document.getElementById('productList');
+            errorDiv.textContent = '';
+            try {
+                let response = await fetch('https://fakestoreapi.com/products');
+                if (!response.ok) throw new Error('Network response was not ok');
+                let products = await response.json();
+                displayProducts(products);
+            } catch (error) {
+                errorDiv.textContent = 'Failed to fetch products. Please try again later.';
+                console.error('Error fetching products:', error);
+            }
+        }
+
+        function displayProducts(products) {
+            let productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            products.forEach(product => {
+                let productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}">
+                    <h3>${product.title}</h3>
+                    <p>$${product.price}</p>
+                    <button onclick="alert('Viewing details for: ${product.title}')">View Details</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>

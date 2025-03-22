@@ -1,0 +1,38 @@
+const weatherForm = document.getElementById('weatherForm');
+const cityInput = document.getElementById('city');
+const weatherDisplay = document.getElementById('weather');
+
+weatherForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const city = cityInput.value.trim();
+
+    if (!city) {
+        weatherDisplay.textContent = "Please enter a city name.";
+        return;
+    }
+
+    try {
+        await fetchWeather(city);
+    } catch (error) {
+        weatherDisplay.textContent = "Something went wrong. Please try again.";
+    }
+});
+
+async function fetchWeather(city) {
+    const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeather API key
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("City not found or network issue.");
+        }
+
+        const data = await response.json();
+
+        weatherDisplay.textContent = `Weather in ${data.name}: ${data.weather[0].description}, ${data.main.temp}°C`;
+    } catch (error) {
+        weatherDisplay.textContent = error.message;
+    }
+}

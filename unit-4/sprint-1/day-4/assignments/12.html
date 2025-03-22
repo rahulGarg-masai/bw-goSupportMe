@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Post</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form { margin-bottom: 20px; }
+        input, textarea { display: block; width: 100%; margin: 10px 0; padding: 8px; }
+        button { padding: 10px; background: blue; color: white; border: none; cursor: pointer; }
+        button:hover { background: darkblue; }
+        #response { margin-top: 20px; padding: 10px; background: #f4f4f4; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Create a New Post</h2>
+    <form id="postForm">
+        <input type="text" id="title" placeholder="Title" required>
+        <textarea id="body" placeholder="Body" required></textarea>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <div id="response"></div>
+    
+    <script>
+        document.getElementById('postForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            let title = document.getElementById('title').value.trim();
+            let body = document.getElementById('body').value.trim();
+            if (!title || !body) {
+                alert('Both fields are required.');
+                return;
+            }
+            let responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = 'Submitting...';
+            try {
+                let response = await fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, body, userId: 1 })
+                });
+                let data = await response.json();
+                responseDiv.innerHTML = `<h3>Post Created</h3><p><strong>ID:</strong> ${data.id}</p><p><strong>Title:</strong> ${data.title}</p><p><strong>Body:</strong> ${data.body}</p>`;
+            } catch (error) {
+                responseDiv.innerHTML = 'Error submitting post. Please try again.';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
