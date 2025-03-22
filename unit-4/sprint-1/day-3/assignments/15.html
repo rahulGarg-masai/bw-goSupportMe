@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-User Shopping Cart</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .cart-item { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Multi-User Shopping Cart</h2>
+    <label>Enter Username: <input type="text" id="username"></label>
+    <button onclick="loginUser()">Login</button>
+    
+    <h3>Add Item</h3>
+    <input type="text" id="itemName" placeholder="Item Name">
+    <input type="number" id="itemPrice" placeholder="Price">
+    <input type="number" id="itemQuantity" placeholder="Quantity">
+    <button onclick="addItem()">Add to Cart</button>
+    
+    <h3>Shopping Cart</h3>
+    <div id="cart"></div>
+    <h4>Total: $<span id="totalPrice">0</span></h4>
+    
+    <script>
+        let currentUser = "";
+        let cartData = {};
+
+        function loginUser() {
+            currentUser = document.getElementById("username").value.trim();
+            if (!currentUser) {
+                alert("Please enter a username.");
+                return;
+            }
+            cartData = JSON.parse(localStorage.getItem("cart")) || {};
+            if (!cartData[currentUser]) cartData[currentUser] = [];
+            updateCartDisplay();
+        }
+
+        function addItem() {
+            if (!currentUser) {
+                alert("Please log in first.");
+                return;
+            }
+            let itemName = document.getElementById("itemName").value.trim();
+            let itemPrice = parseFloat(document.getElementById("itemPrice").value);
+            let itemQuantity = parseInt(document.getElementById("itemQuantity").value);
+            if (!itemName || isNaN(itemPrice) || isNaN(itemQuantity) || itemQuantity <= 0) {
+                alert("Invalid item details.");
+                return;
+            }
+            cartData[currentUser].push({ itemName, price: itemPrice, quantity: itemQuantity });
+            localStorage.setItem("cart", JSON.stringify(cartData));
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            let cart = document.getElementById("cart");
+            cart.innerHTML = "";
+            let total = 0;
+            (cartData[currentUser] || []).forEach((item, index) => {
+                total += item.price * item.quantity;
+                cart.innerHTML += `<div class="cart-item">${item.itemName} - $${item.price} x ${item.quantity} 
+                    <button onclick="removeItem(${index})">Remove</button>
+                </div>`;
+            });
+            document.getElementById("totalPrice").innerText = total.toFixed(2);
+        }
+
+        function removeItem(index) {
+            cartData[currentUser].splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cartData));
+            updateCartDisplay();
+        }
+    </script>
+</body>
+</html>

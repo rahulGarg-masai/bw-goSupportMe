@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Theme Selector</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .light {
+            background-color: white;
+            color: black;
+        }
+        .dark {
+            background-color: black;
+            color: white;
+        }
+        .blue {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choose a Theme</h1>
+    <select id="themeSelector">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="blue">Blue</option>
+    </select>
+
+    <script>
+        const themeSelector = document.getElementById('themeSelector');
+
+        // Load saved theme from sessionStorage
+        const savedTheme = sessionStorage.getItem('theme') || 'light';
+        document.body.className = savedTheme;
+        themeSelector.value = savedTheme;
+
+        themeSelector.addEventListener('change', function() {
+            const selectedTheme = this.value;
+            document.body.className = selectedTheme;
+            sessionStorage.setItem('theme', selectedTheme);
+        });
+    </script>
+</body>
+</html>
