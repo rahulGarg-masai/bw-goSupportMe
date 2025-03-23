@@ -1,0 +1,13 @@
+.main>.list{
+display: block;
+width: 20%;
+border: 1px solid red;
+margin: 5px;
+padding-right: 25px;
+box-sizing: border-box;   
+text-align: center;
+}
+.main>.image{
+    display: flex;
+   
+}

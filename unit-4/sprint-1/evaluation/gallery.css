@@ -1,0 +1,43 @@
+body{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+
+}
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    gap: 10px;
+    width: 80%;
+    max-width: 1000px;
+}
+.image{
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.image img{
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
+.image:hover img{
+    transform: scale(1.1);
+}
+.caption{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(to top ,rgba(0,0,0,0.7),transparent);
+    columns: white;
+    text-align: center;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.image:hover .caption{
+    opacity: 1;
+}
