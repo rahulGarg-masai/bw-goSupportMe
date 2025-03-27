@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix Delete Function</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+</head>
+<body>
+
+    <h2>User List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+
+    <script>
+        const firebaseConfig = {
+
+apiKey: "AIzaSyC6yw7XR8aHCPITOoir-m7slA15DItSplM",
+
+authDomain: "assignemnt-96a86.firebaseapp.com",
+
+databaseURL: "https://assignemnt-96a86-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "assignemnt-96a86",
+
+storageBucket: "assignemnt-96a86.firebasestorage.app",
+
+messagingSenderId: "103304847396",
+
+appId: "1:103304847396:web:35203d4bfc749face878b1",
+
+measurementId: "G-VJFGY6K77F"
+
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function loadUsers() {
+            db.ref("users").on("value", snapshot => {
+                const users = snapshot.val();
+                const table = document.getElementById("userTable");
+                table.innerHTML = "";
+                for (let id in users) {
+                    const row = `<tr id="row-${id}">
+                        <td>${users[id].name}</td>
+                        <td>${users[id].email}</td>
+                        <td><button onclick="deleteUser('${id}')">Delete</button></td>
+                    </tr>`;
+                    table.innerHTML += row;
+                }
+            });
+        }
+
+        function deleteUser(key) {
+            fetch(`https://YOUR_PROJECT.firebaseio.com/users/${key}.json`, {
+                method: 'DELETE'
+            })
+            .then(() => {
+                console.log("User deleted successfully");
+                document.getElementById(`row-${key}`).remove(); // Remove row from table
+            })
+            .catch(error => console.error("Error deleting user:", error));
+        }
+
+        loadUsers();
+    </script>
+
+</body>
+</html>

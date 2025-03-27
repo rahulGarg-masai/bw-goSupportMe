@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List from Firebase</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Firebase Users</h1>
+
+        <!-- Table to display users -->
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+
+        <p id="errorMsg" class="error hidden"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

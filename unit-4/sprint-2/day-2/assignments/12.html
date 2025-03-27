@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase User Form</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        form {
+            display: inline-block;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        input {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Add User to Firebase</h2>
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Enter Name" required>
+        <input type="email" id="email" placeholder="Enter Email" required>
+        <button type="submit">Submit</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+
+apiKey: "AIzaSyC6yw7XR8aHCPITOoir-m7slA15DItSplM",
+
+authDomain: "assignemnt-96a86.firebaseapp.com",
+
+databaseURL: "https://assignemnt-96a86-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "assignemnt-96a86",
+
+storageBucket: "assignemnt-96a86.firebasestorage.app",
+
+messagingSenderId: "103304847396",
+
+appId: "1:103304847396:web:35203d4bfc749face878b1",
+
+measurementId: "G-VJFGY6K77F"
+
+};
+
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        document.getElementById("userForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const messageEl = document.getElementById("message");
+
+            if (name === "" || email === "") {
+                messageEl.textContent = "Please fill in all fields.";
+                messageEl.style.color = "red";
+                return;
+            }
+
+            // Push new user data to Firebase Realtime Database
+            database.ref("users").push({
+                name: name,
+                email: email
+            })
+            .then(() => {
+                messageEl.textContent = "User added successfully!";
+                messageEl.style.color = "green";
+                document.getElementById("userForm").reset();
+            })
+            .catch(error => {
+                messageEl.textContent = "Error: " + error.message;
+                messageEl.style.color = "red";
+            });
+        });
+    </script>
+
+</body>
+</html>

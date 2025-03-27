@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase User Management</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+</head>
+<body>
+
+    <h2>User List</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="userTable"></tbody>
+    </table>
+
+    <h2>Edit User</h2>
+    <form id="editForm">
+        <input type="hidden" id="userId">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Update</button>
+    </form>
+
+    <script>
+        const firebaseConfig = {
+
+apiKey: "AIzaSyC6yw7XR8aHCPITOoir-m7slA15DItSplM",
+
+authDomain: "assignemnt-96a86.firebaseapp.com",
+
+databaseURL: "https://assignemnt-96a86-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "assignemnt-96a86",
+
+storageBucket: "assignemnt-96a86.firebasestorage.app",
+
+messagingSenderId: "103304847396",
+
+appId: "1:103304847396:web:35203d4bfc749face878b1",
+
+measurementId: "G-VJFGY6K77F"
+
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function loadUsers() {
+            db.ref("users").on("value", snapshot => {
+                const users = snapshot.val();
+                const table = document.getElementById("userTable");
+                table.innerHTML = "";
+                for (let id in users) {
+                    const row = `<tr>
+                        <td>${users[id].name}</td>
+                        <td>${users[id].email}</td>
+                        <td><button onclick="editUser('${id}', '${users[id].name}', '${users[id].email}')">Edit</button></td>
+                    </tr>`;
+                    table.innerHTML += row;
+                }
+            });
+        }
+
+        function editUser(id, name, email) {
+            document.getElementById("userId").value = id;
+            document.getElementById("name").value = name;
+            document.getElementById("email").value = email;
+        }
+
+        document.getElementById("editForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const id = document.getElementById("userId").value;
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+
+            db.ref("users/" + id).update({ name, email })
+                .then(() => alert("User updated!"))
+                .catch(err => alert("Error: " + err));
+
+            loadUsers();
+        });
+
+        loadUsers();
+    </script>
+
+</body>
+</html>
