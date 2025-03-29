@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        button { cursor: pointer; padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Library Management System</h2>
+    <button onclick="addBook()">Add Book</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Genre</th>
+                <th>Year</th>
+                <th>Available</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="booksList"></tbody>
+    </table>
+
+    <script>
+        const firebaseConfig = {
+
+apiKey: "AIzaSyC6yw7XR8aHCPITOoir-m7slA15DItSplM",
+
+authDomain: "assignemnt-96a86.firebaseapp.com",
+
+databaseURL: "https://assignemnt-96a86-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "assignemnt-96a86",
+
+storageBucket: "assignemnt-96a86.firebasestorage.app",
+
+messagingSenderId: "103304847396",
+
+appId: "1:103304847396:web:35203d4bfc749face878b1",
+
+measurementId: "G-VJFGY6K77F"
+
+};
+
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        const booksRef = db.ref('books');
+        
+        function renderBooks(snapshot) {
+            const booksList = document.getElementById("booksList");
+            booksList.innerHTML = "";
+            snapshot.forEach(child => {
+                const book = child.val();
+                booksList.innerHTML += `
+                    <tr>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.genre}</td>
+                        <td>${book.publishedYear}</td>
+                        <td>${book.available ? 'Yes' : 'No'}</td>
+                        <td>
+                            <button onclick="updateBook('${child.key}')">Edit</button>
+                            <button onclick="deleteBook('${child.key}')">Delete</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+        
+        booksRef.on("value", renderBooks);
+        
+        function addBook() {
+            const title = prompt("Enter book title:");
+            const author = prompt("Enter author:");
+            const genre = prompt("Enter genre:");
+            const year = prompt("Enter published year:");
+            booksRef.push({ title, author, genre, publishedYear: year, available: true });
+        }
+        
+        function updateBook(key) {
+            const newTitle = prompt("Enter new title:");
+            booksRef.child(key).update({ title: newTitle });
+        }
+        
+        function deleteBook(key) {
+            if (confirm("Are you sure?")) {
+                booksRef.child(key).remove();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <h2>Library Management</h2>
+    <input type="text" id="search" placeholder="Search by title or author">
+    <select id="filterYear">
+        <option value="">Filter by Release Year</option>
+        <option value="2022">2022</option>
+        <option value="2021">2021</option>
+        <option value="2020">2020</option>
+        <option value="2019">2019</option>
+    </select>
+    <button onclick="sortAsc()">Sort by Price (Asc)</button>
+    <button onclick="sortDesc()">Sort by Price (Desc)</button>
+    <ul id="novelList"></ul>
+    
+    <script>
+        const firebaseConfig = {
+
+apiKey: "AIzaSyC6yw7XR8aHCPITOoir-m7slA15DItSplM",
+
+authDomain: "assignemnt-96a86.firebaseapp.com",
+
+databaseURL: "https://assignemnt-96a86-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "assignemnt-96a86",
+
+storageBucket: "assignemnt-96a86.firebasestorage.app",
+
+messagingSenderId: "103304847396",
+
+appId: "1:103304847396:web:35203d4bfc749face878b1",
+
+measurementId: "G-VJFGY6K77F"
+
+};
+
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function fetchNovels() {
+            db.collection("novels").get().then(snapshot => {
+                displayNovels(snapshot.docs);
+            });
+        }
+
+        function displayNovels(novels) {
+            document.getElementById("novelList").innerHTML = "";
+            novels.forEach(doc => {
+                let novel = doc.data();
+                document.getElementById("novelList").innerHTML += `<li>${novel.title} by ${novel.author} - $${novel.price} (${novel.release_year})</li>`;
+            });
+        }
+
+        document.getElementById("search").addEventListener("input", function() {
+            let query = this.value.toLowerCase();
+            db.collection("novels").where("title", ">=", query).get().then(snapshot => {
+                displayNovels(snapshot.docs);
+            });
+        });
+
+        document.getElementById("filterYear").addEventListener("change", function() {
+            let year = this.value;
+            db.collection("novels").where("release_year", "==", parseInt(year)).get().then(snapshot => {
+                displayNovels(snapshot.docs);
+            });
+        });
+
+        function sortAsc() {
+            db.collection("novels").orderBy("price", "asc").get().then(snapshot => {
+                displayNovels(snapshot.docs);
+            });
+        }
+
+        function sortDesc() {
+            db.collection("novels").orderBy("price", "desc").get().then(snapshot => {
+                displayNovels(snapshot.docs);
+            });
+        }
+
+        fetchNovels();
+    </script>
+</body>
+</html>
