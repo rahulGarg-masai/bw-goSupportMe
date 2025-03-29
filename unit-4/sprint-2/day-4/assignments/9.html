@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .todo-container { margin: 20px auto; width: 50%; }
+        .todo-item { display: flex; align-items: center; margin: 5px 0; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .pagination { margin-top: 20px; text-align: center; }
+        .pagination button { margin: 5px; padding: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <button onclick="fetchTodos()">Fetch Todos</button>
+        <div id="todo-list"></div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <script>
+        const apiUrl = "https://jsonplaceholder.typicode.com/todos";
+        let todos = [];
+        let currentPage = 1;
+        const itemsPerPage = 10;
+
+        async function fetchTodos() {
+            try {
+                const response = await fetch(apiUrl);
+                todos = await response.json();
+                renderTodos();
+                renderPagination();
+            } catch (error) {
+                console.error("Error fetching todos:", error);
+            }
+        }
+
+        function renderTodos() {
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedTodos = todos.slice(start, end);
+            const todoList = document.getElementById("todo-list");
+            todoList.innerHTML = "";
+            paginatedTodos.forEach(todo => {
+                const div = document.createElement("div");
+                div.className = "todo-item";
+                div.innerHTML = `<input type="checkbox" ${todo.completed ? "checked" : ""}> ${todo.title}`;
+                todoList.appendChild(div);
+            });
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(todos.length / itemsPerPage);
+            const paginationDiv = document.getElementById("pagination");
+            paginationDiv.innerHTML = "";
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement("button");
+                button.innerText = i;
+                button.onclick = function() {
+                    currentPage = i;
+                    renderTodos();
+                };
+                paginationDiv.appendChild(button);
+            }
+        }
+    </script>
+</body>
+</html>
