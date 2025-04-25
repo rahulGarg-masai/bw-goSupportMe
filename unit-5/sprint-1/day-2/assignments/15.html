@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+const blogs = [
+  { title: "React Basics", content: "Learn the basics of React.", isFeatured: true },
+  { title: "Advanced React", content: "Delve deeper into React.", isFeatured: false },
+  { title: "React Performance Tips", content: "Optimize your React apps.", isFeatured: true },
+];
+function BlogPost({title,content,isFeatured}){
+    const postStyle={
+        border:"1px solid red",
+        borderRadius:"5px",
+        padding:"15px",
+        margin:"10px , 0 ",
+        backgroundColor: isFeatured? "Yellow" : "White"
+    };
+    return (
+<>
+<div style={postStyle} >
+    <h2>{title}</h2>
+    <p> {content} </p>
+    {isFeatured && <span>Featured</span>}
+    </div>
+</>
+);
+}
+function BlogPage(){
+    return (
+        <div>
+            <h1>My Blog Page</h1>
+            {blogs.map((blog,index)=>(
+                <BlogPost
+                key={index}
+                title={blog.title}
+                content = {blog.content}
+                isFeatured={blog.isFeatured}
+                />
+            ))}
+            </div>
+    );
+}
+let root = ReactDOM.createRoot(document.getElementById("root")).render(<BlogPage/>);
+</script>

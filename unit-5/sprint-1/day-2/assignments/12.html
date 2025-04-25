@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+const container={
+    display:"flex",
+    flexWrap:"wrap",
+justifyContent:"center"
+};
+const cards={
+    border:"1px solid red",
+    padding:"5px",
+
+}
+function Parent({title,children}){
+return(
+    <div style={cards} >
+    <h1>{title}</h1>
+    <p>{children}</p>
+    </div>
+)
+}
+function App(){
+    return (
+        <>
+        <div style={container} >
+<Parent title="first card title" children="first details tab"   />
+<Parent title="second card title" children="second details tab"   />
+<Parent title="third card title" children="third details tab"   />
+</div>
+        </>
+    )
+}
+let root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App/>)
+
+
+</script>

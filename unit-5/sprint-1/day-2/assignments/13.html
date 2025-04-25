@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">dom</div>
+
+</body>
+</html>
+<script type="text/babel">
+    const container={
+    display:"flex",
+    flexWrap:"wrap",
+    gap:'20px',
+justifyContent:"center"
+
+};
+function Pack({title}){
+    return (
+        <div >
+            <h3>{title}</h3>
+            </div>
+    )
+}
+function Price({rate}){
+    return (
+        <div >
+            <h3>{rate}</h3>
+            </div>
+    )
+}
+function Click({text,style}){
+    return (
+        <div>
+            <button style={style} > {text} </button>
+            </div>
+    )
+}
+function List({items}){
+    return(
+        <div>
+            <ul>
+                {items.map((item,index)=>(
+                    <li key={index}>{item}</li>
+                ))}
+                </ul>
+            </div>
+    );
+}
+function App(){
+    const itemlist1=['item1a','item1b','item1c'];
+    const itemlist2=['item2a','item2b','item2c'];
+    const itemlist3=['item3a','item3b','item3c'];
+
+    return (
+        <>
+<div id="app" style={container} >
+    <div>
+    <Pack title="Starter"/>
+    <Pack title="Lorem plus"/>
+    <Pack title="Lorem pro"/>
+</div>
+<div>
+<List items={itemlist1} />
+<List items={itemlist2} />
+<List items={itemlist3} />
+</div>
+<div>
+<Price rate={"Free"}/>
+<Price rate={"$32.00"}/>
+<Price rate={"$50.00"}/>
+</div>
+<div>
+<Click style={{backgroundColor: "grey", color: "purple"}} text={"Get Started"} />
+<Click  style={{backgroundColor: "purple", color: "white"}} text={"Get Started"} />
+<Click  style={{backgroundColor: "grey", color: "purple"}} text={"Get Started"} />
+</div>
+
+
+    
+    
+    </div>
+        </>
+    )
+}
+let root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App/>);
+</script>
