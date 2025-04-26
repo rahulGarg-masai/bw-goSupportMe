@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const {useState} =React;
+function Home(){
+    return (
+<h1>home</h1>
+);
+}
+function Contact(){
+    return (
+<h1>contact</h1>
+);
+}
+function About(){
+    return (
+<h1>about</h1>
+);
+}
+
+function App(){
+const [currpage,setpage]=useState("");
+function handleNavigate(page){
+        setpage(page);
+}
+    function RenderPage(){
+        if(currpage==='Home'){
+            return <Home/>;
+        }
+        else if(currpage==='Contact'){
+            return <Contact/>;
+        }
+        else if(currpage==='About'){
+            return <About/>;
+        }
+    }
+    return (
+<>
+<div>
+    <button onClick={()=>handleNavigate('Home')} >Home</button>
+    <button onClick={()=>handleNavigate("Contact")} >Contact</button>
+    <button onClick={()=>handleNavigate("About")} >About</button>
+    
+    </div>
+    <div>
+        {RenderPage()}
+        </div>
+</>
+
+
+    )
+}
+
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+    </script>
+</body>
+</html>
