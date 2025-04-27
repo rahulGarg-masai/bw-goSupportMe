@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">dom</div>
+</body>
+</html>
+<script type="text/babel">
+const {useState}=React;
+
+function Cart(){
+const [item,setItem]=useState({
+    name:'',
+    quantity:'',
+});
+const [list , setList]=useState([]);//list array for item list yeah
+function handleSubmit(e){
+e.preventDefault()
+//add to the list array
+setList([...list,item])
+setItem({
+    name:'',
+    quantity:'',
+})
+}
+
+function handleChange(e){
+    const {name,value}=e.target;
+setItem({...item,[name]:value})
+}
+
+function handleRemove(){
+//if list array empty do nothing 
+//else remove last added item-simpler , more complex would be to have remove button next to each item
+if(list.length>0){
+    setList(list.slice(0,-1))
+}
+
+}
+
+function handleRemoveAll(){
+//clear list
+setList([])
+}
+
+return(
+    <>
+    <form onSubmit={handleSubmit} >
+    <label >
+        item:{" "}
+<input 
+type="text"
+name='name'
+value={item.name}
+onChange={handleChange}
+required
+/>
+</label>
+<br/>
+<label>
+    quantity:{" "}
+    <input 
+     type="text"
+     name='quantity'
+     value={item.quantity}
+     onChange={handleChange}
+     required
+     />
+    </label>
+    <br/>
+    <button  type="submit"  >add</button> {/* handleSubmit in form is enough , no need for it with button*/}
+</form>
+    <br/>
+    <button onClick={handleRemove} >remove</button>
+    <br/>
+    <button onClick={handleRemoveAll} >clear all</button>
+
+    <ul>
+        {list.map((item,key)=>
+            <li key={key} >
+                {item.name}-{item.quantity}
+                </li>
+        )}
+
+
+        </ul>
+
+    </>
+)
+}
+
+
+function App(){
+    return (
+        <>
+        <Cart/>
+        </>
+    )
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>

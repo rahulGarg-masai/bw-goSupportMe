@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">dom</div>
+</body>
+</html>
+<script type="text/babel" >
+const {useState}=React;
+function Tasks(){
+    let [task,setTask]=useState({
+        name:'',
+        priority:'high',
+        status:'',
+    });
+const [work,setWork]=useState([]);
+function handleSubmit(e){
+e.preventDefault()
+setWork([...work,task])
+setTask({
+    name:'',
+        priority:'high',
+        status:'',
+})
+}
+
+function handleChange(e){
+    const {name,value}=e.target;
+    setTask({...task,[name]:value})
+}
+function handleDelete(idx){
+    setWork(work.filter((_,index)=> index!==idx))//clever 4
+}
+function handleToggle(idx){
+    setWork()
+}
+    return (
+        <>
+        <form onSubmit={handleSubmit}>
+            <label>
+                name:{' '}
+                <input 
+                type="text"
+                name='name'
+value={task.name}
+onChange={handleChange}
+required
+                />
+                </label>
+                <br/>
+                <label >
+                <select name='priority' value={task.priority} onChange={handleChange}>
+                    <option value="high">high</option>
+                    <option value="medium">medium</option>
+                    <option value="low">low</option>
+                    </select>
+                </label>
+                <br/>
+
+    <button type='submit'>submit</button>
+</form>
+<ul>
+    {work
+//clever1
+.sort((a,b)=>{
+    //clever2
+    const order = {high:0,medium:1,low:2};
+    return order[a.priority]-order[b.priority];
+})
+.map((item,idx)=>(
+    <li>
+<input
+type="checkbox"
+name="status"
+value={task.status}
+checked={item.status==='completed'}
+onChange={()=>handleDelete(idx)}
+/>
+
+        {item.name}-{item.priority}
+    </li>
+))
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </ul>
+            </>
+    )
+
+}
+function App(){
+    return (
+        <Tasks/>
+    )
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>)
+
+</script>

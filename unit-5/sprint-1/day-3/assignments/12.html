@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">dom</div>
+</body>
+</html>
+<script type="text/babel" >
+const {useState}=React;
+
+function Counter(){
+    const [count , setCount]=useState(0);
+    const [step,setStep]=useState(1);
+function increaseCount(){
+    setCount(count+step);
+}
+function decreaseCount(){
+    if(count-step>0){
+    setCount(count-step);
+    }
+    else{
+        setCount(0);
+    }
+}
+
+    return(
+<>
+<label >enter step</label>
+<input type="number"
+value={step}
+onChange={(e)=>setStep(+e.target.value)} /* value is a string so convert to num using unary plus operator */
+/>
+<p> {count} </p>
+<button onClick={increaseCount} >increase</button>
+<button onClick={decreaseCount} >decrease</button>
+
+</>
+
+    )
+}
+function App(){
+    return (
+        <>
+        <Counter/>
+        </>
+    )
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
+</script>

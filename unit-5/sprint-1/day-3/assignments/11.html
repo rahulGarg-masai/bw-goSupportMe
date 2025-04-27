@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">dom</div>
+</body>
+</html>
+<script type="text/babel" >
+const {useState}= React;
+function Visibility(){
+    const [view , setView] = useState(false);
+
+    function Click(){
+setView(!view)
+
+    }
+    return (
+<>
+<button onClick={Click} > {!view?'show':'hide'} </button>
+      {view &&<p   >Hello, welcome to React state management!</p>}   
+</>
+
+    )
+    
+}
+
+function App(){
+    return (
+        <>
+<Visibility/>
+        </>
+    )
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
