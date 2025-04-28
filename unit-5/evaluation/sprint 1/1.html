@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root">DOM</div>
+</body>
+</html>
+<script type="text/babel">
+const {useState}=React;
+
+ function FeedbackForm(){
+    const [form,setForm]=useState([]);
+    const [feedback,setFeedback]=useState({
+        name:'',
+        email:''
+    })
+
+function handleChange(e){
+const {name,value}=e.target;
+setFeedback(prev => ({
+      ...prev,
+      [name]: value
+    }));
+
+}
+
+async function handleSubmit(e){
+    e.preventDefault()
+const url = "https://feedbackreactevaluation28april-default-rtdb.asia-southeast1.firebasedatabase.app/feedback.json"
+try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(feedback)
+      });
+      if (response.ok) {
+        alert("Feedback submitted!");
+        setFeedback({ name: '', email: '', comment: '' });
+      } else {
+        alert("Submission failed.");
+      }
+    } catch (error) {
+      alert("Error submitting feedback.");
+      console.error(error);
+    }
+}
+
+return (
+<>
+<form onSubmit={handleSubmit}>
+    <input
+    name='name'
+    placeholder="name"
+    type="text"
+    value={feedback.name}
+    onChange={handleChange}
+    />
+    <br/>
+    <input 
+    name='email'
+    placeholder='email'
+    type="email"
+    value={feedback.email}
+    onChange={handleChange}
+    />
+    <button type='submit' >add feedback</button>
+    </form>
+</>
+
+)
+}
+
+async function FeedbackList(){
+
+}
+
+async function FeedbackItem(){
+
+}
+
+    function App(){
+        return (
+            <>
+<FeedbackForm/>
+            </>
+        )
+    }
+    ReactDOM.createRoot(document.getElementById("root")).render(<App/>)
+</script>
