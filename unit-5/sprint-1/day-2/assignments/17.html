@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User List</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Displays a single user's info
+    function UserCard({ user }) {
+      return (
+        <div style={{ border: '1px solid #ccc', padding: '8px', margin: '4px 0' }}>
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Age:</strong> {user.age}</p>
+        </div>
+      );
+    }
+
+    // Renders the list of UserCard components
+    function UserList({ users }) {
+      if (users.length === 0) {
+        return <p>No users added yet.</p>;
+      }
+      return (
+        <div>
+          {users.map((u, i) => (
+            <UserCard key={i} user={u} />
+          ))}
+        </div>
+      );
+    }
+
+    function App() {
+      // 1) holds all added users
+      const [users, setUsers] = React.useState([]);
+      // 2) holds current form values
+      const [form, setForm] = React.useState({ name: '', email: '', age: '' });
+      // 3) holds validation errors
+      const [errors, setErrors] = React.useState({});
+
+      // update form fields
+      function handleChange(e) {
+        const { name, value } = e.target;
+        setForm(f => ({ ...f, [name]: value }));
+      }
+
+      // simple validation
+      function validate() {
+        const errs = {};
+        if (!form.name.trim()) errs.name = 'Name is required';
+        const emailRe = /^\S+@\S+\.\S+$/;
+        if (!emailRe.test(form.email)) errs.email = 'Invalid email';
+        const ageNum = parseInt(form.age, 10);
+        if (isNaN(ageNum) || ageNum <= 0) errs.age = 'Age must be a positive number';
+        return errs;
+      }
+
+      // on form submit, validate and append
+      function handleSubmit(e) {
+        e.preventDefault();
+        const errs = validate();
+        if (Object.keys(errs).length) {
+          setErrors(errs);
+          return;
+        }
+        setUsers(prev => [
+          ...prev,
+          { name: form.name.trim(), email: form.email, age: parseInt(form.age, 10) }
+        ]);
+        // reset form + errors
+        setForm({ name: '', email: '', age: '' });
+        setErrors({});
+      }
+
+      return (
+        <div style={{ maxWidth: '400px', margin: '20px auto' }}>
+          <h2>Add User</h2>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Name"
+              />
+              {errors.name && <div style={{ color: 'red' }}>{errors.name}</div>}
+            </div>
+            <div>
+              <input
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Email"
+              />
+              {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+            </div>
+            <div>
+              <input
+                name="age"
+                type="number"
+                value={form.age}
+                onChange={handleChange}
+                placeholder="Age"
+              />
+              {errors.age && <div style={{ color: 'red' }}>{errors.age}</div>}
+            </div>
+            <button type="submit">Add User</button>
+          </form>
+
+          <h2>User List</h2>
+          <UserList users={users} />
+        </div>
+      );
+    }
+
+    // Mount React
+    ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(<App />);
+  </script>
+</body>
+</html>

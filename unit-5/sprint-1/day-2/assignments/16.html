@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
+<script type="text/babel">
+  function ProductCard({ product }) {
+    if (!product) return null;
+    return (
+      <div className="product-card">
+        <p>Name: {product.name}</p>
+        <p>Price: {product.price}</p>
+        <img src={product.image} alt={product.name} style={{maxWidth: '200px'}} />
+      </div>
+    );
+  }
+
+  function App() {
+    const [formData, setFormData] = React.useState({
+      name: '',
+      price: '',
+      image: ''
+    });
+    const [submittedProduct, setSubmittedProduct] = React.useState(null);
+
+    function handleChange(e) {
+      const { name, value } = e.target;
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      setSubmittedProduct(formData);
+    }
+
+    return (
+      <div>
+        <form onSubmit={handleSubmit}>
+          <input
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Product Name"
+          />
+          <input
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleChange}
+            placeholder="Price"
+          />
+          <input
+            name="image"
+            value={formData.image}
+            onChange={handleChange}
+            placeholder="Image URL"
+          />
+          <button type="submit">Submit</button>
+        </form>
+
+        {/* only shows after we click “Submit” */}
+        <ProductCard product={submittedProduct} />
+      </div>
+    );
+  }
+
+  ReactDOM
+    .createRoot(document.getElementById('root'))
+    .render(<App />);
+</script>
