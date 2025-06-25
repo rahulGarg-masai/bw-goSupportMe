@@ -22,7 +22,7 @@ app.get('/test',(req,res)=>{
     let data = JSON.parse(fs.readFileSync('./db.json','utf8'));
     res.json({msg:'list of dishes',data});
  })     
-
+//get from dishes id
  app.get('/get-dish/:id',(req,res)=>{
     let data = JSON.parse(fs.readFileSync('./db.json','utf8'));
 let id = req.params.id;
@@ -32,6 +32,20 @@ if(!idx){
 }
 else {
     res.send(idx.name);
+}
+})
+
+//get from dish name - get request is a READ REQUEST SO WE DONT UPDATE THE DB AT END
+app.get('/get-dishesbyname',(req,res)=>{
+    let data = JSON.parse(fs.readFileSync('./db.json','utf8'));
+let name = req.query.name;
+if(name.length!==0){
+    let filteredDishes = data.filter((ele)=> ele.name===name
+    );
+    res.json({msg:`dishes with name found`,filteredDishes})
+}
+else {
+res.status(404).send('not found');
 }
 })
 
@@ -60,15 +74,16 @@ else {
 })
 
 app.delete('/delete-dish/:id',(req,res)=>{
-    let id = req.params.id;
+    let id = parseInt(req.params.id);
     let data = JSON.parse(fs.readFileSync('./db.json','utf8'));
-    let idx = data.findIndex((ele)=>ele.id==id);
-    if(idx==-1){
+    let idx = data.findIndex((ele)=>ele.id===id);
+    
+    if(idx===-1){
         res.status(404).send('not found ')
     }
     else {
         let updatedish = data.filter((ele,i)=>{
-            return ele.id!=id;
+            return ele.id!==id;
         })
         data = updatedish;
         fs.writeFileSync('./db.json',JSON.stringify(data));

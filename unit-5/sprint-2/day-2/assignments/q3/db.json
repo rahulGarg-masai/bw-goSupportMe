@@ -1,13 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "Margherita Pizza",
-    "description": "Classic pizza topped with fresh mozzarella, basil, and tomato sauce.",
-    "price": 8.99,
-    "category": "Italian",
-    "isVegetarian": true
-  },
-  {
     "id": 2,
     "name": "Kung Pao Chicken",
     "description": "Spicy stir-fried chicken with peanuts, chili peppers, and vegetables.",
@@ -46,6 +38,5 @@
     "price": 10.99,
     "category": "Indian",
     "isVegetarian": true
-  },
-  null
+  }
 ]
