@@ -1,0 +1,42 @@
+[
+  {
+    "id": 2,
+    "name": "Kung Pao Chicken",
+    "description": "Spicy stir-fried chicken with peanuts, chili peppers, and vegetables.",
+    "price": 12.5,
+    "category": "Chinese",
+    "isVegetarian": false
+  },
+  {
+    "id": 3,
+    "name": "Vegan Buddha Bowl",
+    "description": "Quinoa, roasted chickpeas, avocado, kale, and tahini dressing.",
+    "price": 10.75,
+    "category": "Vegan",
+    "isVegetarian": true
+  },
+  {
+    "id": 4,
+    "name": "Tacos",
+    "description": "Soft corn tortillas filled with    cilantro, onion, and salsa.",
+    "price": 9.25,
+    "category": "Mexican",
+    "isVegetarian": false
+  },
+  {
+    "id": 5,
+    "name": "Chicken Caesar Salad",
+    "description": "Romaine lettuce tossed with Caesar dressing, grilled chicken, and croutons.",
+    "price": 11,
+    "category": "Salad",
+    "isVegetarian": false
+  },
+  {
+    "id": 6,
+    "name": "cupcake",
+    "description": "Cottage cheese cubes cooked in a rich and creamy tomato-based gravy.",
+    "price": 10.99,
+    "category": "Indian",
+    "isVegetarian": true
+  }
+]
