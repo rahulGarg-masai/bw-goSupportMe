@@ -16,3 +16,16 @@ const addUser = async (req,res) => {
         res.status(400).json({msg:error});
     }
 }
+
+const addProfile = async (req,res) => {
+    try {
+        const {userId} = req.params;
+        let profile = req.body;
+        const newProfile = await UserModel
+    } catch (error) {
+        res.status(400).json({msg:error});
+        
+    }
+}
+
+module.exports = {addUser};
