@@ -104,7 +104,7 @@ const searchUser = async (req,res) => {
             return res.status(200).json(profile);  
         }
         else if(userName && !profileName){
-            let user = await UserModel.find({name:userName});
+            let user = await UserModel.findOne({name:userName});
             return res.status(200).json({msg:'User found, but profile not found',user});  
             
         }
