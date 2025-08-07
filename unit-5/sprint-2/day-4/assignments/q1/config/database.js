@@ -7,7 +7,8 @@ const connectDB = async () => {
       
       
     } catch (error) {
-        res.status(400).json({msg:'error',error})
+        console.log('error while connecting ',error);
+        
     }
 }
 
