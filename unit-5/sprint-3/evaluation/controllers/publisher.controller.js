@@ -19,6 +19,7 @@ const newPublisher = async (req,res) => {
 const getAllPublishers = async (req,res) => {
     try {
         let publishers = await PublisherModel.find();
+        return res.status(200).json({msg:'publishers retrieved',publishers});
     } catch (error) {
         res.status(400).json({msg:'error getting all publishers',error})
    }
@@ -48,11 +49,11 @@ const updatePublisher = async (req,res) => {
         }
         else {
             let updatedPublisher = await PublisherModel.findByIdAndUpdate(
-                {id},
+                id,
                 req.body,
                 {new:true}
             )
-            return res.status(200).json({msg:'publisher updated',updatePublisher})
+            return res.status(200).json({msg:'publisher updated',updatedPublisher})
         }
     } catch (error) {
         res.status(400).json({msg:'error updating publisher by its id',error})
