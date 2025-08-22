@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Group Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Registration Form -->
+        <div id="registration" class="registration-container">
+            <div class="registration-form">
+                <h2>Join Group Chat</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" required placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="isAdmin"> Admin User
+                        </label>
+                    </div>
+                    <button type="submit">Join Chat</button>
+                </form>
+                <div id="registrationError" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="chatInterface" class="chat-interface hidden">
+            <div class="chat-header">
+                <h2>Group Chat</h2>
+                <div class="user-info">
+                    <span id="currentUser"></span>
+                    <button id="disconnectBtn" class="disconnect-btn">Disconnect</button>
+                </div>
+            </div>
+
+            <div class="chat-content">
+                <!-- Online Users Panel -->
+                <div class="online-users">
+                    <h3>Online Users (<span id="userCount">0</span>)</h3>
+                    <div id="onlineUsersList" class="users-list"></div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="chat-messages">
+                    <div id="messageContainer" class="message-container"></div>
+                    
+                    <!-- Message Input -->
+                    <div class="message-input-container">
+                        <!-- Regular message input -->
+                        <div class="input-row">
+                            <input type="text" id="messageInput" placeholder="Type your message..." />
+                            <button id="sendBtn">Send</button>
+                        </div>
+                        
+                        <!-- Admin announcement input -->
+                        <div id="adminControls" class="admin-controls hidden">
+                            <div class="input-row">
+                                <input type="text" id="announcementInput" placeholder="Type announcement..." />
+                                <button id="sendAnnouncementBtn">Send Announcement</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
